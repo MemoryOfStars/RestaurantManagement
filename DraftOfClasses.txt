@@ -1,0 +1,79 @@
+////////*class1:clerk//////////
+{
+	elements:
+		1.ClerkID
+	functions:
+		1.
+}*/////////////////////////////
+
+class2:dish
+{
+	elements:
+		1.Name(string)
+		2.Price(integer)
+		3.kind(string)
+	functions:
+		1.GetName()
+		2.GetPrice()
+		3.SetName(Name)
+		4.SetPrice(Name)
+}
+
+//Different Attributes
+class3:dishes
+{
+	elements:
+		1.Dishes(List[dish])
+	functions:
+		1.ListAllDishes()
+		2.AddNewDishes(string newName)
+		3.DeleteDishes(string Name)
+		4.SetDishesName(string)
+		5.SetDishesPrice(string,integer)
+		6.GetDishesPrice(Name)
+		7.ListAllDishesWithAscendingPrice()
+}
+
+
+class4:order
+{
+	elements:
+		1.CreateTime
+		2.tableID
+		3.dish
+		4.AmountOfdishes
+		5.state
+	functions:
+		1.GetTime()//CurrentTime - CreateTime
+		2.GetState()
+		3.GetDishInfo()
+		4.GetQuantity()
+	
+}
+
+
+class5:tables
+{
+	elements:
+		1.OrdersOfSelf(list[order])
+		2.TotalConsumption(int)
+	functions:
+		1.AddOrder(string dishName,int Quantity)
+		2.ChangeOrderState()//Costomer is willing to cancel an order or sth.
+		3.GetTotalConsumption()
+
+}
+
+
+class6:orders
+{
+	elements:
+		1.order(Dictionary{string(TableID):list(order)})
+
+	functions:
+		1.GetOrders(TableID)
+		2.GetTotalConsumption(TableID)
+		3.SearchOrder(TableID,DishName)
+
+
+}
