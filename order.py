@@ -13,7 +13,7 @@ import dish
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 Class Name:order
-Discription:Dish Displayed on the Menu,in the Main Procedure,load dishes from MySQL
+Discription:Show orders from all tables.Load from Database
 ########################################
 Element:
         1.createTime(int)
@@ -26,6 +26,7 @@ Functions:
         2.GetState()//return State(int)
         3.GetDishInfo()//return dish
         4.GetQuantity()//return Quantity
+        5.SetQuantity(newQuantity)
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 class order:
@@ -41,11 +42,14 @@ class order:
         return time.time() - self.createTime
 
     def GetState(self):
-        return state
+        return self.state
 
     def GetDishInfo(self):
-        return dish
+        return self.dish
         
     def GetQuantity(self):
         return self.quantity
+        
+    def SetQuantity(self,newQuantity):
+        self.quantity = newQuantity
         
