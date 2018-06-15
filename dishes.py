@@ -16,7 +16,7 @@ Discription:Dish Displayed on the Menu,in the Main Procedure,load dishes from My
 Element:
         1.dishList(list[dish])
 Functions:
-        1.ListAllDishes()
+        1.ListAllDishes():return dishList
         2.AddNewDishes(string newName,int Price,int Kind)
         3.DeleteDishes(string Name)
         4.SetDishesName(string Name,string newName)
@@ -28,15 +28,30 @@ Functions:
 class dishes:
     
     def __init__(self):
-        self.dishList = {}
-        self.dish = dish() #A Proceeding element for Functions
+        self.dishList = []
+        self.dish = dish.dish() #A Proceeding element for Functions
 
     def ListAllDishes(self):
-        #Initialize a new Window
-        #Load and Display dishes from Database
-        db = mc.connect("localhost", "root", "zaq1XSW2cde3", "restaurant", charset='utf8' )
+        #Load dishes from Database
+        db = mc.connect(host="localhost",user="root",password="zaq1XSW2cde3",database="restaurant")
         cursor = db.cursor()
+        sql = "SELECT * FROM DISH"
+        # 执行SQL语句
+        cursor.execute(sql)
+        # 获取所有dish
+        results = cursor.fetchall()
+        print(results)
+        for row in results:
+            self.dish.Name  = row[0]
+            self.dish.Price = row[1]
+            self.dish.Cate  = row[2]
+            self.dishList.append(self.dish)
+            
         db.close()
+            #以dish列表的形式返回菜单
+        return self.dishList
+
+
         
     def AddNewDishes(self,newDish,newPrice,newKind):
         

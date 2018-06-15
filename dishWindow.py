@@ -7,7 +7,7 @@ Created on Fri Jun 15 16:29:57 2018
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 
-                          M A I N    P R O C E D U R E
+                          D  I  S  H     W  I  N  D  O  W
 
 
 
@@ -16,10 +16,15 @@ Discription:Main Window And other Windows
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-import dish,dishes,order,table
+import dish,dishes,order,table,DishList
 import tkinter as tk
 import mysql.connector as mc
 import threading
+
+def clickOnList():
+    #Open a new Window
+    dishListWindow = DishList.dishList(4,"Dish List")
+    dishListWindow.start()
 
 class dishWindowThread(threading.Thread):
     
@@ -28,17 +33,14 @@ class dishWindowThread(threading.Thread):
         self.threadID = threadID
         self.name = name
     
-    def run(self):
-        root = tk.Tk(className='dishWindow')     
-        li     = ['C','python','php','html','SQL','java']
-        movie  = ['CSS','jQuery','Bootstrap']
-        listb  = tk.Listbox(root)          #  创建两个列表组件
-        listb2 = tk.Listbox(root)
-        for item in li:                 # 第一个小部件插入数据
-            listb.insert(0,item)
-        for item in movie:              # 第二个小部件插入数据
-            listb2.insert(0,item)
+
         
-        listb.pack()                    # 将小部件放置到主窗口中
-        listb2.pack()
-        root.mainloop()                 # 进入消息循环
+    
+    def run(self):
+        dishWindow = tk.Tk(className='dishWindow')   
+        dishWindow.geometry("300x300")
+        listButton   = tk.Button(dishWindow,anchor='c',width = 30,height = 4,text='List',fg='blue',bg='red',command=clickOnList).place(x = 50,y = 20)
+        #还未加事件响应函数
+        changeButton = tk.Button(dishWindow,anchor='c',width = 30,height = 4,text='Change',fg='red',bg='blue').place(x = 50,y = 200)
+
+        dishWindow.mainloop()                 # 进入消息循环

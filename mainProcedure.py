@@ -27,6 +27,9 @@ import dishWindow
 def windowDishRun():
     window = dishWindow.dishWindowThread(2,"dishWindow")
     window.start()
+    
+    
+#def windowOrdersRun():
 
 '''
 def windowRun(window):
