@@ -29,7 +29,7 @@ class dishes:
     
     def __init__(self):
         self.dishList = []
-        self.dish = dish.dish() #A Proceeding element for Functions
+        #A Proceeding element for Functions
 
     def ListAllDishes(self):
         #Load dishes from Database
@@ -40,13 +40,13 @@ class dishes:
         cursor.execute(sql)
         # 获取所有dish
         results = cursor.fetchall()
-        print(results)
+        
         for row in results:
-            self.dish.Name  = row[0]
-            self.dish.Price = row[1]
-            self.dish.Cate  = row[2]
+            self.dish = dish.dish(row[0],row[1],row[2])
             self.dishList.append(self.dish)
             
+        #for index in self.dishList:
+        #    print(index.GetName(),index.GetPrice(),index.Cate)    
         db.close()
             #以dish列表的形式返回菜单
         return self.dishList

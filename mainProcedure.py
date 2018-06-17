@@ -29,7 +29,9 @@ def windowDishRun():
     window.start()
     
     
-#def windowOrdersRun():
+def windowOrdersRun():
+    window = dishWindow.dishWindowThread(2,"dishWindow")
+    window.start()
 
 '''
 def windowRun(window):
@@ -51,7 +53,7 @@ class mainWindowThread (threading.Thread):
                                     # 创建两个列表
 
         buttonDishes = tk.Button(root,anchor = 'c',width = 30,height = 4,text='Dishes',fg='blue',bg='red',command=windowDishRun).place(x = 50,y = 20)
-        buttonOrders = tk.Button(root,anchor = 'c',width = 30,height = 4,text='Orders',fg='blue',bg='red').place(x = 50,y = 200)
+        buttonOrders = tk.Button(root,anchor = 'c',width = 30,height = 4,text='Orders',fg='blue',bg='red',command=windowOrdersRun).place(x = 50,y = 200)
         
      
         root.mainloop()                 # 进入消息循环
