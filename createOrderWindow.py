@@ -22,27 +22,39 @@ ThreadID:      4
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 import dish,dishes,order,table
+import time
 import tkinter as tk
 import mysql.connector as mc
 import threading
 
 
 
-def clickOnApply():
-    ##How to Solve????????????????????????????????????????????????????
-    TableID = orderEntry_TableID.get()
+
+def clickOnApply(createOrderWin):
+
+    TableID = createOrderWin.orderEntry_TableID.get()
     #clear the Entry Box after Clicking on the Button
-    orderEntry_TableID.delete(0,END)
-    DishName = orderEntry_DishName.get()
-    orderEntry_DishName.delete(0,END)
-    Quantity = orderEntry_Quantity.get()
-    orderEntry_Quantity.delete(0,END)
+    createOrderWin.orderEntry_TableID.delete(0,tk.END)
+    DishName = createOrderWin.orderEntry_DishName.get()
+    createOrderWin.orderEntry_DishName.delete(0,tk.END)
+    Quantity = createOrderWin.orderEntry_Quantity.get()
+    createOrderWin.orderEntry_Quantity.delete(0,tk.END)
+    #Calculate the Time
+    timeStamp = time.time()
+    timeStruct = time.localtime(timeStamp)
+    timeStr = time.strftime('%Y-%m-%d %H:%M:%S', timeStruct)
+    
     db = mc.connect(host="localhost", user="root", password="zaq1XSW2cde3", database="restaurant")
     cursor = db.cursor()
+    print(TableID)
+    print(DishName)
+    print(Quantity)
+    print(timeStr)
+    print(int(1))
     sql = "INSERT INTO ORDERS \
             (TableID,Name,Quantity,CreateTime,State) \
             ('%d','%s','%d','%s','%d')" % \
-            ('','','','','','')
+            (TableID,DishName,Quantity,timeStr,1)
     cursor.execute(sql)
     
 
@@ -56,61 +68,25 @@ class createOrderWindow(threading.Thread):
         self.name = name
     
     def run(self):
-        createOrderWin = tk.Tk(className='Create New Order')
-        createOrderWin.geometry("600x600")
-        orderLabel_TableID = tk.Label(createOrderWin,text='Table ID:',bg='green')
-        orderLabel_TableID.place(x=20,y=30)
-        orderEntry_TableID = tk.Entry(createOrderWin)
-        orderEntry_TableID.place(x=20,y=60)
-        orderLabel_DishName = tk.Listbox(createOrderWin,text='Dish Name:',bg='blue')
-        orderLabel_DishName.place(x=40,y=30)
-        orderEntry_DishName = tk.Entry(createOrderWin)
-        orderEntry_DishName.place(x=40,y=60)
-        orderLabel_Quantity = tk.Listbox(createOrderWin,text='Dish Name:',bg='blue')
-        orderLabel_Quantity.place(x=40,y=30)
-        orderEntry_Quantity = tk.Entry(createOrderWin)
-        orderEntry_Quantity.place(x=40,y=60)
-        dishButton_Apply = tk.Listbox(createOrderWin,text='Apply',command=clickOnApply)
-        dishButton_Apply.pack(anchor='s')
+        self.createOrderWin = tk.Tk(className='Create New Order')
+        self.createOrderWin.geometry("600x600")
+        self.orderLabel_TableID = tk.Label(self.createOrderWin,text='Table ID:',bg='green')
+        self.orderLabel_TableID.place(x=20,y=30)
+        self.orderEntry_TableID = tk.Entry(self.createOrderWin)
+        self.orderEntry_TableID.place(x=20,y=60)
+        self.orderLabel_DishName = tk.Label(self.createOrderWin,text='Dish Name:',bg='blue')
+        self.orderLabel_DishName.place(x=40,y=30)
+        self.orderEntry_DishName = tk.Entry(self.createOrderWin)
+        self.orderEntry_DishName.place(x=40,y=60)
+        self.orderLabel_Quantity = tk.Label(self.createOrderWin,text='Quantity:',bg='blue')
+        self.orderLabel_Quantity.place(x=40,y=30)
+        self.orderEntry_Quantity = tk.Entry(self.createOrderWin)
+        self.orderEntry_Quantity.place(x=40,y=60)
+        self.orderButton_Apply = tk.Listbox(self.createOrderWin,text='Apply',command=clickOnApply(self))
+        self.orderButton_Apply.pack(anchor='s')
         
-        db = mc.connect(host="localhost", user="root", password="zaq1XSW2cde3", database="restaurant")
-        cursor = db.cursor()
-        #currentDishes = dishes.dishes()
-        #dishesList = currentDishes.ListAllDishes();
-        #sql = "SELECT * FROM DISH"
-        #cursor.execute(sql)
-        #dishesList = cursor.fetchall()
-        listDishes = dishes.dishes()
-        dishesList = listDishes.ListAllDishes()
-        #print('dishesList')
-        i = 0
-        while i < len(dishesList):
-            print(dishesList[i].GetPrice(),dishesList[i].GetName(),dishesList[i].Cate)
-            i = i + 1
-
-        #Get Category Information
         
-        sql = "SELECT * FROM CATEGORY"
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        #print(results)
-        dishCate = []
-        for row in results:
-            dishCate.append(row[1])
-        db.close()
+        self.createOrderWin.mainloop()                 # 进入消息循环
         
-        index=0
-        while index < len(dishesList):
-            #显示每一条菜品在列表控件上
-            #print(dishesList[index])
-            tup = dishesList[index]
-            dishListBox1.insert(tk.END,tup.GetName())
-            dishListBox2.insert(tk.END,tup.GetPrice())
-            dishListBox3.insert(tk.END,dishCate[int(tup.Cate) - 1])
-
-            index = index + 1
-        dishListBox1.place(x=50,y=50)
-        dishListBox2.place(x=200,y=50)
-        dishListBox3.place(x=350,y=50)
-
-        dishListWin.mainloop()                 # 进入消息循环
+        
+        

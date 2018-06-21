@@ -22,18 +22,27 @@ import dish,dishes,order,table,DishList,createOrderWindow
 import tkinter as tk
 import mysql.connector as mc
 import threading
+import orderList
+import changeOrderWin
 
 def clickOnCreateNewOrder():
     #Open a new Window
-    newOrderWindow = createOrderWindow.createOrderWindow(3,"CreateNewOrder")
+    newOrderWindow = createOrderWindow.createOrderWindow(7,"CreateNewOrder")
     newOrderWindow.start()
     
     
 def clickOnListAllOrder():
     #Open a List of All Orders
     #Not Create Source Files Yet
-    orderListWin = orderList.orderList(10,"ListofAllOrders")
+    orderListWin = orderList.listOfAllOrders(8,"ListofAllOrders")
     orderListWin.start()
+    
+    
+def clickOnChangeOrder():
+    #Open a List of All Orders
+    #Not Create Source Files Yet
+    orderChangeWin = changeOrderWin.changeOrderWindow(10,"ListofAllOrders")
+    orderChangeWin.start()
     
     
 
@@ -51,6 +60,8 @@ class ordersWindowThread(threading.Thread):
         #还未加事件响应函数
         newOrderButton   = tk.Button(dishWindow,anchor='c',width = 30,height = 4,text='New Order',fg='blue',bg='red',command=clickOnCreateNewOrder).place(x = 50,y = 20)
         #还未加事件响应函数
-        orderChangeButton = tk.Button(dishWindow,anchor='c',width = 30,height = 4,text='Order Change',fg='red',bg='blue').place(x = 50,y = 200)
+        ListOrderButton   = tk.Button(dishWindow,anchor='c',width = 30,height = 4,text='List Orders',fg='blue',bg='red',command=clickOnListAllOrder).place(x = 50,y = 20)
+        #还未加事件响应函数
+        orderChangeButton = tk.Button(dishWindow,anchor='c',width = 30,height = 4,text='Order Change',fg='red',bg='blue',command=ordersWindowThread).place(x = 50,y = 200)
 
         dishWindow.mainloop()                 # 进入消息循环

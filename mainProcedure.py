@@ -22,6 +22,7 @@ import tkinter as tk
 import mysql.connector as mc
 import threading
 import dishWindow
+import ordersWindow
 #import mainProcedure
 
 def windowDishRun():
@@ -30,7 +31,7 @@ def windowDishRun():
     
     
 def windowOrdersRun():
-    window = dishWindow.dishWindowThread(2,"dishWindow")
+    window = ordersWindow.ordersWindowThread(3,"dishWindow")
     window.start()
 
 '''

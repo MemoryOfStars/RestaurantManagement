@@ -31,12 +31,12 @@ Functions:
 
 class order:
     
-    def __init__(self,tableID,newDish,quantity):
-        self.createTime = time.time()
+    def __init__(self,tableID,newDish,quantity,crt=time.time(),state=1):
+        self.createTime = crt
         self.tableID = tableID
         self.dish = newDish
         self.quantity = quantity
-        self.state = 1
+        self.state = state
         
     def GetTime(self):
         return time.time() - self.createTime
@@ -52,4 +52,12 @@ class order:
         
     def SetQuantity(self,newQuantity):
         self.quantity = newQuantity
+        
+    def GetCRT(self):
+        return self.createTime
+        
+    def GetName(self):
+        return self.dish.GetName()
+        
+    
         
